@@ -1,1 +1,1 @@
-# Various cryptography assignments and homework for CS789
+Various cryptography assignments and homework for CS789
