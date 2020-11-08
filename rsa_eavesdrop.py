@@ -18,11 +18,9 @@ def calculateDecryptionKey(p, q, e):
 
     # Get the order of the group given p and q
     n = p * q
-    print('RSA modulus: ', n)
 
     # Compute the order of the group
     order = computeGroupOrder(p, q)
-    print('Order of group: ', order)
 
     # Compute the multiplicativve inverse of e in Z*(order)
     # using the Extended Euclidean algorithm.
@@ -55,13 +53,14 @@ def factorModulus(n):
     q = 0
 
     # Here we attempt to factor the modulus n into two primes p and q
-    # by starting from a divisor of 3 and working up to the square root
-    # of n, by Sieve of Eratosthenes. Possible divisors are 3, 5, 7, etc,
-    # up to sqrt of n. So we step by 2 in this range.
-    for i in range(3, int(math.sqrt(n)), 2):
+    # by starting from a divisor of 3 and working up to n/2. 
+    # Possible divisors are 3, 5, 7, etc, up to n.
+    # So we step by 2 in this range.
+    for i in range(3, int(n/2), 2):
         while n % i == 0:
             p = i
             q = int(n / i)
+            print('Eve finds factors in primes p =', p, 'and q =', q, 'in modulus ', n)
             return p, q
 
     if p == 0:
@@ -82,8 +81,6 @@ def main():
 
     # Attempt to factor the modulus into p,q to break the encryption
     p, q = factorModulus(n)
-
-    print('Modulus n =', n, 'factors in primes p =', p, 'and q =', q)
 
     # Now compute the decryption key
     d = calculateDecryptionKey(p, q, e)

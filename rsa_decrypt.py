@@ -18,6 +18,7 @@ def calculateEncryptionDecryptionKeys(p, q):
 
     # Get the order of the group given p and q
     n = p * q
+    print('')   
     print('RSA modulus: ', n)
 
     # Compute the order of the group
@@ -56,7 +57,7 @@ def calculateEncryptionDecryptionKeys(p, q):
     else:
         d = y0
 
-    print('Decryption key: ', d)
+    print('Decryption exponent: ', d)
 
     return e, d
 

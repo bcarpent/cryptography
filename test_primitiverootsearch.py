@@ -154,7 +154,7 @@ class TestPrimitiveRootSearch(unittest.TestCase):
             },
         ]            
 
-        # Failuure test cases with bad guesses
+        # Failure test cases with bad guesses
         testcases_badguess = [
             {
                 "mod": 3,
