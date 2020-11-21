@@ -40,8 +40,10 @@ def sendEncryptedMsg(recipientEmail, encryptedMsg):
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.ehlo()
     server.starttls()
-    gmailUser = input("Enter sender's gmail username: ")
-    gmailPassword = getpass("Enter sender's gmail password: ")
+
+    # Use dummy gmail account to send to Bob
+    gmailUser = 'luna.ripowski'
+    gmailPassword = 'AliceVsBob789'
     server.login(gmailUser, gmailPassword)
     server.sendmail(sender, receivers, message)
     server.quit()
@@ -62,7 +64,7 @@ def main():
     # Send public key and encrypted message to peer
     recipientEmail = input("Enter recipient email address: ")
     sendEncryptedMsg(recipientEmail, encryptedMsg)
-
+    print('Sent encrypted message!')
 
 if __name__ == '__main__':
     main()

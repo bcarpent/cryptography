@@ -87,8 +87,10 @@ def sendPublicKey(peerEmail, e, n):
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.ehlo()
     server.starttls()
-    gmailUser = input("Enter sender's gmail username: ")
-    gmailPassword = getpass("Enter sender's gmail password: ")
+
+    # Use dummy gmail account to send to Alice
+    gmailUser = 'luna.ripowski'
+    gmailPassword = 'AliceVsBob789'
     server.login(gmailUser, gmailPassword)
     server.sendmail(sender, receivers, message)
     server.quit()
@@ -125,6 +127,7 @@ def main():
     sendPublicKey(peerEmail, e, n)
 
     # Now wait for the encrypted message to be received
+    print
     print
     print('Wait for encrypted message to be received...')
     E_x = int(input("Enter encrypted message E_x: "))

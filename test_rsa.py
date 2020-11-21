@@ -51,7 +51,7 @@ class Test_Rsa(unittest.TestCase):
                 "x": 12035
             },
 
-            # Test cases with higher primes from Garrett, Table 2: Primes Below 10,000
+            # Test cases with higher primes taken from Garrett, Table 2: Primes Below 10,000
             {
                 "p": 107,
                 "q": 1619,
@@ -71,7 +71,7 @@ class Test_Rsa(unittest.TestCase):
                 "p": 8707,
                 "q": 9787,
                 "x": 987345
-            },            
+            },
         ]
 
         # Test RSA encryption and decryption:
