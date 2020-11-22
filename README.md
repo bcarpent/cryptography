@@ -1,1 +1,1 @@
-Various cryptography assignments and homework for CS789
+Final project including cryptography programs and test harnesses for CS789
