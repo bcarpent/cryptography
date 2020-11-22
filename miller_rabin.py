@@ -43,23 +43,11 @@ def calculateConstants(n):
     print ('Computed ', n, '- 1 = 2 ^', s, '*', m)
     return s, m
 
-# Returns 0 if definitely a composite, or a nonzero n
-# if a probable prime
-def millerRabinTest(guess, rounds):
-    # First we need to select a candidate value of n, 
-    # the integer we are testing for primality
-    n = selectCandidate(guess)
 
-    # Calculate constants s and m such that
-    # n - 1 = 2^s * m
-    s, m = calculateConstants(n)
-
-    # Now select base b such that 1 < a < n - 1
-    # Start with base b = 2
-    b = 2
-
-    # Compute b0 = b^m mod n
+def testRound(n, s, m, b):
+    # First compute b0 = b^m mod n
     # If the result is 1 or -1, n is a strong pseudoprime
+    print('Base selected:', b)
     b0 = fastexponent.calculate(b, m, n)
     print ('b 0 =', b0)
     if (b0 == 1 or b0 == n-1):
@@ -72,22 +60,70 @@ def millerRabinTest(guess, rounds):
         b1 = (b0 ** 2) % n
         print ('b', i, '=', b1)
         if (b1 == 1):                # n is definitely composite
+            print('Composite')
             return 0
         elif (b1 == n-1):            # n is a strong pseudoprime
+            print('Probable prime')
             return n
         else:                       # continue
             b0 = b1
 
     # For all s, b1 != -1 so n is definitely a composite
-    print('Exhausted all values of s')
     return 0
+
+
+# Returns 0 if definitely a composite, or a nonzero n
+# if a probable prime
+def millerRabinTest(guess, rounds):
+    n = 0
+
+    # Any guess must be an odd integer. If not, print error and return.
+    if guess != 0 and guess % 2 == 0:
+        print('\nYou entered an even number. Please try again with an odd guess greater than 2.')
+        return 0
+
+    # If the guess is 0, we continue selecting candidates until we
+    # find a prime number.
+    searchComplete = False
+    n = selectCandidate(guess)
+    while (searchComplete == False):
+        # Calculate constants s and m such that
+        # n - 1 = 2^s * m
+        s, m = calculateConstants(n)
+
+        # Start with base b = 2 for the first round. For subsequuent
+        # rounds, select random base b such that 1 < b < n - 1.
+        # If any round returns 0, it is definitely a composite so we
+        # can return 0 if there was a nonzero guess by the user.
+        b = 2
+        for j in range(rounds):
+            print ('\nRound', j + 1)
+            result = testRound(n, s, m, b)
+            if guess != 0 and result == 0:          # if guess was a composite, return immediately
+                return 0
+            elif guess == 0 and result == 0:        # if composite and no guess, break and try new n
+            	break
+            else:                                   # if n is a probable prime, go another round
+                b = random.randint(2, n-1)
+
+        # If we found a probable prime after running through all the rounds
+        # our search for a prime is complete. Otherwise, try the test with
+        # another value of n.
+        if result != 0:
+        	searchComplete = True
+        else:
+            print ('Integer ', n, 'is definitely a composite, seeking new candidate.')
+            n = selectCandidate(0)
+
+    return n
+
 
 def main():
     print('MILLER RABIN TEST')
     print('Probabilistic Primality Test')
 
     guess = int(input("Enter odd integer guess or 0 to find a strong pseudoprime: "))
-    rounds = int(input("Enter number of rounds to run the test: "))
+    rounds = int(input("Enter number of rounds to run on probable primes: "))
 
     # Execute the primality test which returns p and # of rounds
     # If p = 0, the input guess is determined to be a composite. Otherwise the test

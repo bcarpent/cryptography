@@ -11,7 +11,7 @@ def calculate(x, e, n):
     y1 = 1
     y2 = 0
 
-#    print('X: ', x1, ', E: ', e1, ', Y: ', y1, 'for modulus n =', n)
+    print('X: ', x1, ', E: ', e1, ', Y: ', y1, 'for modulus n =', n)
 
 	# If e is even, square x mod n and halve e, no result
 	# If e is odd, update the result y = xy mod n and decrement e
