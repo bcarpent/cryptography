@@ -110,7 +110,8 @@ def millerRabinTest(guess, rounds):
         # our search for a prime is complete. Otherwise, try the test with
         # another value of n.
         if result != 0:
-        	searchComplete = True
+            print ('Strong pseudoprime found:', result, 'in', rounds, 'rounds')
+            searchComplete = True
         else:
             print ('Integer ', n, 'is definitely a composite, seeking new candidate.')
             n = selectCandidate(0)
@@ -126,17 +127,17 @@ def main():
     rounds = int(input("Enter number of rounds to run on probable primes: "))
 
     # Execute the primality test which returns p and # of rounds
-    # If p = 0, the input guess is determined to be a composite. Otherwise the test
+    # If result is 0, the input guess is determined to be a composite. Otherwise the test
     # considers it a strong pseudoprime
-    p = millerRabinTest(guess, rounds)
+    result = millerRabinTest(guess, rounds)
 
-    if p == 0:
+    if result == 0:
         if guess > 0:
             print ('The integer', guess, 'is definitely a composite (not a prime)')
         else:
             print ('No prime found in', rounds, 'number of rounds')
     else:
-        print ('Strong pseudoprime found:', p, 'in', rounds, 'rounds')
+        print ('Strong pseudoprime found:', result, 'in', rounds, 'rounds')
 
 
 if __name__ == '__main__':

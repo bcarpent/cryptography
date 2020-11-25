@@ -3,6 +3,7 @@
 import math
 import fastexponent
 import euclidean
+import miller_rabin
 import smtplib
 from getpass import getpass
 
@@ -111,8 +112,14 @@ def main():
     print('Compute a public key, send to peer, then decrypt incoming message')
     print
 
-    p = int(input("Enter integer prime p: "))
-    q = int(input("Enter integer prime q: "))
+    # Find two prime numbers p and q using 5 rounds of the Miller Rabin primality test
+    p = miller_rabin.millerRabinTest(0, 5)
+    q = miller_rabin.millerRabinTest(0, 5)
+
+    print('Prime p found: ', p)
+    print('Prime q found: ', q)
+
+    # Product of the two primes will be our modulus n
     n = p * q
 
     print
