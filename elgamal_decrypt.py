@@ -33,10 +33,12 @@ def computePublicKey(p):
     # Choose secret r from {2, ..., p-2}
     l = random.randint(2, p-2)
 
-    print('Secret l: ', l)
+    print('\nBob has secret l: ', l)
 
     # Compute public key b^l % p
     b_l = fastexponent.calculate(b, l, p)
+
+    print('Bob has public key (b, b^l, p): (', b, ',', b_l, ',', p, ')')
 
     return b, b_l, l
 

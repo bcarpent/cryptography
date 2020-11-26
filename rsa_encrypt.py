@@ -6,7 +6,6 @@ import smtplib
 from getpass import getpass
 
 def rsaEncryption(n, e, x):
-
     # We now have the encryption exponent. Let's run fast exponentiation on
     # the message x
     result = fastexponent.calculate(x, e, n)
@@ -16,7 +15,6 @@ def rsaEncryption(n, e, x):
 
 
 def sendEncryptedMsg(recipientEmail, encryptedMsg):
-
     # Setup sender and receivers (Eve is also listening)
     sender = 'bcarpent@bu.edu'
     receivers = [ recipientEmail ]
@@ -57,6 +55,11 @@ def main():
     n = int(input("Enter group order n:"))
     e = int(input("Enter encryption exponent e:"))
     x = int(input("Enter integer message x: "))
+
+    # Plaintext message must be less than prime modulus
+    while (x >= n):
+        print('\n*** Message must be less than the modulus n = ', n)
+        x = int(input("Enter integer message x < n:"))
 
     # Encrypt the message x with public key
     encryptedMsg = rsaEncryption(n, e, x)

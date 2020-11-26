@@ -6,7 +6,7 @@ import rsa_eavesdrop
 # This RSA encrypt/decrypt/eavesdrop test can be run as follows:
 # python3 -m unittest -v test_rsa.py 
 #
-# Tp run full suite of unit tests:
+# To run full suite of unit tests:
 # python -m unittest discover -v
 #
 class Test_Rsa(unittest.TestCase):
@@ -16,7 +16,7 @@ class Test_Rsa(unittest.TestCase):
             {
                 "p": 3,
                 "q": 11,
-                "x": 4
+                "x": 31
             },
             {
                 "p": 11,
@@ -80,6 +80,7 @@ class Test_Rsa(unittest.TestCase):
         # (1) Bob calculates the encryption and decryption keys
         # (2) Alice encrypts the message x
         # (3) Bob decrypts the encrypted message E_x
+        # (4) Eve eavesdrops to find the plaintext message
         for case in testcases:
             e, d = rsa_decrypt.calculateEncryptionDecryptionKeys(case["p"], case["q"])
             n = case["p"] * case["q"]

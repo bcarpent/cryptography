@@ -67,8 +67,12 @@ def main():
     p = int(input("Enter integer prime modulus: "))
     b = int(input("Enter integer generator b: "))
     b_l = int(input("Enter integer b^l mod p: "))
-    x = int(input("Enter integer message x to send: "))
-    print
+    x = int(input("Enter integer message x: "))
+
+    # Plaintext message must be less than prime modulus
+    while (x >= p):
+        print('\n*** Message must be less than the prime modulus p = ', p)
+        x = int(input("Enter integer message x < p:"))
 
     # Encrypt the message with Bob's public key (p, b, b^l)
     encryptedMsg, b_r = encrypt(p, b, b_l, x)
