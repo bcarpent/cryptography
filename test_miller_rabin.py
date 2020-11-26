@@ -86,3 +86,4 @@ class TestMillerRabin(unittest.TestCase):
             result = miller_rabin.millerRabinTest(case["guess"], case["rounds"])
             self.assertEqual(result, case["result"])
 
+
