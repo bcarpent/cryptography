@@ -103,7 +103,7 @@ def millerRabinTest(guess, rounds):
                 return 0
             elif guess == 0 and result == 0:        # if composite and no guess, break and try new n
             	break
-            else:                                   # if n is a probable prime, go another round
+            else:                                   # if n is a probable prime, go another round with new base
                 b = random.randint(2, n-1)
 
         # If we found a probable prime after running through all the rounds

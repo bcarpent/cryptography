@@ -3,8 +3,10 @@ import rsa_encrypt
 import rsa_decrypt
 import rsa_eavesdrop
 
-# Full test suite can be run as follows:
+# This RSA encrypt/decrypt/eavesdrop test can be run as follows:
+# python3 -m unittest -v test_rsa.py 
 #
+# Tp run full suite of unit tests:
 # python -m unittest discover -v
 #
 class Test_Rsa(unittest.TestCase):

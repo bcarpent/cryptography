@@ -72,7 +72,6 @@ def factorModulus(n):
 def main():
     print('RSA EAVESDROPPING')
     print('Eve eavesdrops on Alice and Bob. From the public key, decrypt the message')
-    print
 
     n = int(input("From public key, enter modulus n:"))
     e = int(input("From public key, enter exponent e:"))
