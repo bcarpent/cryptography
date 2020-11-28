@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import blumblumshub
 import random
 import fastexponent
 
@@ -9,7 +10,7 @@ def selectBase(p, root):
     # Could start with common roots but let's use random b to
     # test more thoroughly.
     if root == 0:
-        b = random.randint(2, p-1)
+    	b = blumblumshub.rand(2, p-1)
     else:
     	b = root
 

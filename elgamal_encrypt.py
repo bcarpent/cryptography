@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
 
+import blumblumshub
 import euclidean
 import fastexponent
 import math
 import primitiverootsearch
-import random
 import smtplib
 from getpass import getpass
 
 def encrypt(p, b, b_l, x):
-	# Choose secret r from {2, ..., p-2}
-    r = random.randint(2, p-2)
+	# Use Blum-Blum-Shub PRNG to choose secret r from {2, ..., p-2}. 
+    r = blumblumshub.rand(2, p-2)
 
     print('Alice chooses a secret r: ', r)
 

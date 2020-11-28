@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 
+import blumblumshub
 import euclidean
 import fastexponent
 import math
 import miller_rabin
 import primitiverootsearch
-import random
 import smtplib
 from getpass import getpass
 
@@ -30,15 +30,13 @@ def computePublicKey(p):
     # Find generator b of Z(p)*
     b = findGenerator(p)
 
-    # Choose secret r from {2, ..., p-2}
-    l = random.randint(2, p-2)
+    # Use Blum-Blum-Shub PRNG to choose secret l from {2, ..., p-2}
+    l = blumblumshub.rand(2, p-2)
 
     print('\nBob has secret l: ', l)
 
     # Compute public key b^l % p
     b_l = fastexponent.calculate(b, l, p)
-
-    print('Bob has public key (b, b^l, p): (', b, ',', b_l, ',', p, ')')
 
     return b, b_l, l
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import fastexponent
-import random
+import secrets
 
 def selectCandidate(guess):
     candidateFound = False
@@ -9,7 +9,7 @@ def selectCandidate(guess):
         # If guess is 0, user wants us to pick a candidate odd number.
         # So let's pick a random number between 101 and 500,000
         if guess == 0:
-            n = random.randint(101, 500000)
+            n = secrets.choice(range(101, 1000000))
         else:
             n = guess
 
@@ -21,7 +21,7 @@ def selectCandidate(guess):
         	candidateFound = True
         	break
 
-    print ('\nCandidate odd integer for testing: ', n)
+#    print ('\nCandidate odd integer for testing: ', n)
     return n
 
 
@@ -39,17 +39,17 @@ def calculateConstants(n):
             m = int((n - 1) / (2 ** s))
             constantsFound = True
 
-    print ('Constants m = ', m, ', s = ', s)
-    print ('Computed ', n, '- 1 = 2 ^', s, '*', m)
+#    print ('Constants m = ', m, ', s = ', s)
+#    print ('Computed ', n, '- 1 = 2 ^', s, '*', m)
     return s, m
 
 
 def testRound(n, s, m, b):
     # First compute b0 = b^m mod n
     # If the result is 1 or -1, n is a strong pseudoprime
-    print('Base selected:', b)
+#    print('Base selected:', b)
     b0 = fastexponent.calculate(b, m, n)
-    print ('b 0 =', b0)
+#    print ('b 0 =', b0)
     if (b0 == 1 or b0 == n-1):
         return n
 
@@ -58,12 +58,12 @@ def testRound(n, s, m, b):
     # Loop from 1 to s - 1 and continue squaring resuult and testing
     for i in range(1, s):
         b1 = (b0 ** 2) % n
-        print ('b', i, '=', b1)
+#        print ('b', i, '=', b1)
         if (b1 == 1):                # n is definitely composite
-            print('Composite')
+#            print('Composite')
             return 0
         elif (b1 == n-1):            # n is a strong pseudoprime
-            print('Probable prime')
+#            print('Probable prime')
             return n
         else:                       # continue
             b0 = b1
@@ -79,7 +79,7 @@ def millerRabinTest(guess, rounds):
 
     # Any guess must be an odd integer. If not, print error and return.
     if guess != 0 and guess % 2 == 0:
-        print('\nYou entered an even number. Please try again with an odd guess greater than 2.')
+        print('\nYou guessed with an even number. Please try again with an odd guess greater than 2.')
         return 0
 
     # If the guess is 0, we continue selecting candidates until we
@@ -97,14 +97,14 @@ def millerRabinTest(guess, rounds):
         # can return 0 if there was a nonzero guess by the user.
         b = 2
         for j in range(rounds):
-            print ('\nRound', j + 1)
+#            print ('\nRound', j + 1)
             result = testRound(n, s, m, b)
             if guess != 0 and result == 0:          # if guess was a composite, return immediately
                 return 0
             elif guess == 0 and result == 0:        # if composite and no guess, break and try new n
             	break
             else:                                   # if n is a probable prime, go another round with new base
-                b = random.randint(2, n-1)
+                b = secrets.choice(range(2, n-1))
 
         # If we found a probable prime after running through all the rounds
         # our search for a prime is complete. Otherwise, try the test with
@@ -136,8 +136,6 @@ def main():
             print ('The integer', guess, 'is definitely a composite (not a prime)')
         else:
             print ('No prime found in', rounds, 'number of rounds')
-    else:
-        print ('Strong pseudoprime found:', result, 'in', rounds, 'rounds')
 
 
 if __name__ == '__main__':

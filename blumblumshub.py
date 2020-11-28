@@ -28,21 +28,7 @@ def totalBits(number):
     return len(binary)
 
 
-def produceRandomInteger(high):
-    # How many bits of randomness are needed for the high number?
-    num_bits = totalBits(high)
-    print('\nTotal bits needed:', num_bits)
-
-    # 1. Use Miller-Rabin to choose two strong pseudoprimes p and q in 5 rounds each
-    p = selectPrime()
-    q = selectPrime()
-    print('\nPrime p:', p)
-    print('Prime q:', q)
-
-    # 2. Compute n = p * q
-    n = p * q
-    print('Modulus n:', n)
-
+def generateSequence(n, num_bits, high):
     # 3. Randomly choose a seed s0 in multiplicative group Z(n)*
     seedSelected = False
     while (seedSelected == False):
@@ -54,7 +40,7 @@ def produceRandomInteger(high):
             print ('Seed selected: ', seed)
             seedSelected = True
 
-    # Produce sequence of random bits by continually squaring
+    # 4. Generate sequence of random bits by continually squaring
     s0 = seed
     s1 = (s0 ** 2) % n
     b1 = s1 % 2
@@ -78,13 +64,43 @@ def produceRandomInteger(high):
     return number
 
 
+def rand(low, high):
+    # How many bits of randomness are needed for the high number?
+    num_bits = totalBits(high)
+    print('\nTotal bits needed:', num_bits)
+
+    # 1. Use Miller-Rabin to choose two strong pseudoprimes p and q in 5 rounds each
+    p = selectPrime()
+    q = selectPrime()
+    print('\nPrime p:', p)
+    print('Prime q:', q)
+
+    # 2. Compute n = p * q
+    n = p * q
+    print('Modulus n:', n)
+
+    # Check the range. If the number is too low, try again with a new seed
+    withinRange = False
+    while (withinRange == False):
+        number = generateSequence(n, num_bits, high)
+        if (number >= low):
+            withinRange = True
+        else:
+            print('Number too low, trying again with new seed')
+            continue
+
+    print('Random number generated: ', number)
+    return number
+
+
 def main():
     print('BLUM-BLUM-SHUB PRNG')
     print('Random Number Generator')
 
+    low  = int(input("Enter minimum value: "))
     high = int(input("Enter maximum value: "))
 
-    result = produceRandomInteger(high)
+    result = rand(low, high)
 
     print ('Blum-Blum-Shub random number: ', result)
 

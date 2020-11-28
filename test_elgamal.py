@@ -13,7 +13,7 @@ class Test_ElGamal(unittest.TestCase):
 
     def test_elGamalEncryptionDecryption(self):
         testcases = [
-            # Test cases with higher primes taken from Garrett, Table 2: Primes Below 10,000
+            # Test cases with primes taken from Garrett, Table 2: Primes Below 10,000
             {
                 "p": 107,
                 "x": 87
@@ -33,6 +33,16 @@ class Test_ElGamal(unittest.TestCase):
             {
                 "p": 9973,
                 "x": 9876
+            },
+
+            # Test cases with larger primes generated from Miller-Rabin test
+            {
+                "p": 333107,
+                "x": 14325
+            },
+            {
+                "p": 489679,
+                "x": 98765
             },
         ]
 

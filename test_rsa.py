@@ -7,7 +7,7 @@ import rsa_eavesdrop
 # python3 -m unittest -v test_rsa.py 
 #
 # To run full suite of unit tests:
-# python -m unittest discover -v
+# python3 -m unittest discover -v
 #
 class Test_Rsa(unittest.TestCase):
 
