@@ -3,11 +3,32 @@
 import math
 import fastexponent
 import euclidean
+import pollards_p_1
+import pollards_rho
 import smtplib
 from getpass import getpass
 
-def computeGroupOrder(p, q):
+def factorModulus(n):
+    # Try factoring with Pollard's Rho method first. Failing that,
+    # try factoring with Pollard's p-1 method.
+    result = pollards_rho.factor(n)
+    if (result != 0):
+        p = result
+        q = n / result
+        print('Pollards Rho factored', n, 'into p =', p, ', q =', q)
+        return p, q
 
+    result = pollards_p_1.factor(n, 8)
+    if (result != 0):
+        p = result
+        q = n / result
+        print('Pollards Rho factored', n, 'into p =', p, ', q =', q)
+        return p, q
+
+    return 0, 0
+
+
+def computeGroupOrder(p, q):
     # Given p and q are primes, then the order using Euler's totient function
     # is (p - 1)(q - 1)
     order = (p - 1) * (q - 1)
@@ -15,7 +36,6 @@ def computeGroupOrder(p, q):
 
 
 def calculateDecryptionKey(p, q, e):
-
     # Get the order of the group given p and q
     n = p * q
 
@@ -46,29 +66,6 @@ def rsaDecryption(E_x, d, n):
     return result
 
 
-def factorModulus(n):
-
-    # Initialize p and q to zero
-    p = 0
-    q = 0
-
-    # Here we attempt to factor the modulus n into two primes p and q
-    # by starting from a divisor of 3 and working up to n/2. 
-    # Possible divisors are 3, 5, 7, etc, up to n.
-    # So we step by 2 in this range.
-    for i in range(3, int(n/2), 2):
-        while n % i == 0:
-            p = i
-            q = int(n / i)
-            print('Eve finds factors in primes p =', p, 'and q =', q, 'in modulus ', n)
-            return p, q
-
-    if p == 0:
-        print('No prime factors found for n =', n)
-
-    return p, q
-
-
 def main():
     print('RSA EAVESDROPPING')
     print('Eve eavesdrops on Alice and Bob. From the public key, decrypt the message')
@@ -80,6 +77,10 @@ def main():
 
     # Attempt to factor the modulus into p,q to break the encryption
     p, q = factorModulus(n)
+
+    if (p == 0 or q == 0):
+        print('Unable to factor modulus using Pollards Rho or p-1 method')
+        return
 
     # Now compute the decryption key
     d = calculateDecryptionKey(p, q, e)
@@ -99,4 +100,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-

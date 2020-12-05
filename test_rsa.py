@@ -1,4 +1,5 @@
 import unittest
+import miller_rabin
 import rsa_encrypt
 import rsa_decrypt
 import rsa_eavesdrop
@@ -84,6 +85,26 @@ class Test_Rsa(unittest.TestCase):
         for case in testcases:
             e, d = rsa_decrypt.calculateEncryptionDecryptionKeys(case["p"], case["q"])
             n = case["p"] * case["q"]
+            E_x = rsa_encrypt.rsaEncryption(n, e, case["x"])
+
+            # Ensure Bob's decrypted result matches the input message x
+            x = rsa_decrypt.rsaDecryption(E_x, d, n)
+            self.assertEqual(case["x"], x)
+
+            # Meanwhile Eve tries to eavesdrop but knows only encryption key e and the modulus n.
+            # Can she factor into p and q and thus compute d to decrypt E_x?
+            p, q = rsa_eavesdrop.factorModulus(n)
+            d = rsa_eavesdrop.calculateDecryptionKey(p, q, e)
+            x = rsa_eavesdrop.rsaDecryption(E_x, d, n)
+            self.assertEqual(case["x"], x)
+
+        # Now run the tests on the same x values with 20-bit p and q primes generated
+        # from the Miller-Rabin algorithm.
+        for case in testcases:
+            p = miller_rabin.millerRabinTest(0, 5)
+            q = miller_rabin.millerRabinTest(0, 5)
+            n = p * q
+            e, d = rsa_decrypt.calculateEncryptionDecryptionKeys(p, q)
             E_x = rsa_encrypt.rsaEncryption(n, e, case["x"])
 
             # Ensure Bob's decrypted result matches the input message x
