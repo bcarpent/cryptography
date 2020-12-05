@@ -2,7 +2,7 @@
 
 import math
 
-def euclidean(m, n):
+def gcd(m, n):
 	# Process of reduction:
 	# We initially calculate the remainder of m / n.
 	# We then replace the dividend and divisor each time as follows
@@ -79,7 +79,7 @@ def main():
 	# Calculate GCD from the Euclidean Algorithm
     print
     print('EUCLIDEAN ALGORITHM')
-    gcd = euclidean(m, n)
+    gcd = gcd(m, n)
     print('GCD(', m, ',', n, ') = ', gcd)
 
     print

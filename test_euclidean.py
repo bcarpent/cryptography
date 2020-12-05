@@ -8,10 +8,10 @@ import euclidean
 class TestEuclidean(unittest.TestCase):
 
     def test_euclidean(self):
-    	result = euclidean.euclidean(36, 10)
+    	result = euclidean.gcd(36, 10)
     	self.assertEqual(result, 2)
 
-    	result = euclidean.euclidean(2740, 1760)
+    	result = euclidean.gcd(2740, 1760)
     	self.assertEqual(result, 20)
 
     def test_extendedEuclidean(self):

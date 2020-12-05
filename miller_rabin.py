@@ -7,9 +7,9 @@ def selectCandidate(guess):
     candidateFound = False
     while (candidateFound == False):
         # If guess is 0, user wants us to pick a candidate odd number.
-        # So let's pick a random number between 101 and 500,000
+        # So let's pick a random number of 20 bits
         if guess == 0:
-            n = secrets.choice(range(101, 1000000))
+            n = secrets.randbits(20)
         else:
             n = guess
 
@@ -86,6 +86,7 @@ def millerRabinTest(guess, rounds):
     # find a prime number.
     searchComplete = False
     n = selectCandidate(guess)
+#    print('\nCandidate number n:', n)
     while (searchComplete == False):
         # Calculate constants s and m such that
         # n - 1 = 2^s * m
@@ -113,7 +114,7 @@ def millerRabinTest(guess, rounds):
             print ('Strong pseudoprime found:', result, 'in', rounds, 'rounds')
             searchComplete = True
         else:
-            print ('Integer ', n, 'is definitely a composite, seeking new candidate.')
+#            print ('Integer ', n, 'is definitely a composite, seeking new candidate.')
             n = selectCandidate(0)
 
     return n

@@ -22,12 +22,6 @@ def selectPrime():
     return prime
 
 
-def totalBits(number):
-    # Convert number to binary and remove first two characters 0b
-    binary = bin(number)[2:]
-    return len(binary)
-
-
 def generateSequence(n, num_bits, high):
     # 3. Randomly choose a seed s0 in multiplicative group Z(n)*
     seedSelected = False
@@ -35,9 +29,9 @@ def generateSequence(n, num_bits, high):
         seed = secrets.choice(range(3, n-1))
 
         # The seed must be a coprime of n to be in Z(n)*
-        gcd = euclidean.euclidean(seed, n)
+        gcd = euclidean.gcd(seed, n)
         if gcd == 1:
-            print ('Seed selected: ', seed)
+#            print ('Seed selected: ', seed)
             seedSelected = True
 
     # 4. Generate sequence of random bits by continually squaring
@@ -45,19 +39,19 @@ def generateSequence(n, num_bits, high):
     s1 = (s0 ** 2) % n
     b1 = s1 % 2
     number = b1
-    print ('Random bit', 1, ':', b1)
-    print ('Random bit sequence:', bin(number))
+#    print ('Random bit', 1, ':', b1)
+#    print ('Random bit sequence:', bin(number))
     for i in range(1, num_bits):
         s2 = (s1 ** 2) % n
         b2 = s2 % 2
-        print ('Random bit', i+1, ':', b2)
+#        print ('Random bit', i+1, ':', b2)
         number = (b2 << i) + b1
 
         # Final number must be less than the ceiling passed in as argument
         if (number > high):
             return b1
 
-        print ('Random bit sequence:', bin(number))
+#        print ('Random bit sequence:', bin(number))
         s1 = s2
         b1 = number
 
@@ -66,18 +60,18 @@ def generateSequence(n, num_bits, high):
 
 def rand(low, high):
     # How many bits of randomness are needed for the high number?
-    num_bits = totalBits(high)
+    num_bits = high.bit_length()
     print('\nTotal bits needed:', num_bits)
 
     # 1. Use Miller-Rabin to choose two strong pseudoprimes p and q in 5 rounds each
     p = selectPrime()
     q = selectPrime()
-    print('\nPrime p:', p)
-    print('Prime q:', q)
+#    print('\nPrime p:', p)
+#    print('Prime q:', q)
 
     # 2. Compute n = p * q
     n = p * q
-    print('Modulus n:', n)
+#    print('Modulus n:', n)
 
     # Check the range. If the number is too low, try again with a new seed
     withinRange = False
@@ -89,7 +83,7 @@ def rand(low, high):
             print('Number too low, trying again with new seed')
             continue
 
-    print('Random number generated: ', number)
+    print('Random number generated:', number)
     return number
 
 
