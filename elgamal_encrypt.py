@@ -12,12 +12,12 @@ def encrypt(p, b, b_l, x):
 	# Use Blum-Blum-Shub PRNG to choose secret r from {2, ..., p-2}. 
     r = blumblumshub.rand(2, p-2)
 
-    print('Alice chooses a secret r: ', r)
+    print('Alice chooses a secret r: %d' % r)
 
     # Compute public key b^r mod p
     b_r = fastexponent.calculate(b, r, p)
 
-    print('Alice has public key (b, b^r): (', b, ',', b_r, ')')
+    print('Alice has public key (b, b^r): (%d, %d)' %(b, b_r))
 
     # Compute (b^l)^r mod p
     b_l_r = fastexponent.calculate(b_l, r, p)
@@ -71,18 +71,22 @@ def main():
 
     # Plaintext message must be less than prime modulus
     while (x >= p):
-        print('\n*** Message must be less than the prime modulus p = ', p)
+        print('\n*** Message must be less than the prime modulus p = %d' % p)
         x = int(input("Enter integer message x < p:"))
 
     # Encrypt the message with Bob's public key (p, b, b^l)
     encryptedMsg, b_r = encrypt(p, b, b_l, x)
 
-    print('Encrypted message: ', encryptedMsg)
+    print('Encrypted message: %d' % encryptedMsg)
 
     # Send public key and encrypted message to peer
-    print('\nSending public key (b^r) =', b_r, 'and encrypted msg E(x) =', encryptedMsg)
-    recipientEmail = input("Enter recipient email address: ")
-    sendEncryptedMsg(recipientEmail, encryptedMsg)
+    print('\nSending public key (b^r) = %d and encrypted msg E(x) = %d' %(b_r, encryptedMsg))
+    try:
+        recipientEmail = raw_input("Enter recipient email address: ")
+        sendEncryptedMsg(recipientEmail, encryptedMsg)
+        print('Sent encrypted message!')
+    except NameError:
+        pass
     print('Sent public key and encrypted message to Bob!')
 
 if __name__ == '__main__':

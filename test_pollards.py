@@ -5,7 +5,7 @@ import pollards_p_1
 import pollards_rho
 
 # This Pollards Rho test can be run as follows:
-# python3 -m unittest -v test_pollards.py 
+# python -m unittest -v test_pollards
 #
 # To run the full suite of unit tests:
 # python3 -m unittest discover -v

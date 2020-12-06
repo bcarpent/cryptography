@@ -1,9 +1,9 @@
 import unittest
 import primitiverootsearch
 
-# Following table was sourced from Garrett, "Making, Breaking Codes",
+# Following table was sourced from Garrett, "Making, Breaking Codes"
 # Table 3: Primitive Roots Under 100
-# python3 -m unittest -v test_primitiverootsearch.py 
+# python -m unittest -v test_primitiverootsearch
 class TestPrimitiveRootSearch(unittest.TestCase):
 
     # Success test cases, no guess

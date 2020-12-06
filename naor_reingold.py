@@ -5,16 +5,18 @@ import fastexponent
 import math
 import miller_rabin
 import primitiverootsearch
-import secrets
+import random
+#import secrets
 
 def selectPrime(n):
     primeSelected = False
     while (primeSelected == False):
         # Guess a very large prime number of n bits
-        guess = secrets.randbits(n)
+        guess = random.SystemRandom().getrandbits(n)
+#        guess = secrets.randbits(n)
         if guess % 2 != 0:                                # Don't bother with even numbers
             prime = miller_rabin.millerRabinTest(guess, 5)
-            print('Prime candidate found: ', prime)
+            print('Prime candidate found: %d' % prime)
         else:
             continue
 
@@ -46,23 +48,22 @@ def decimalToBinaryArray(x_dec, n):
 
 def generateRandomBit(n, N, a, g, r):
     # 7. Choose x which fits within n bits and create array to store binary digits
-    x_dec = secrets.randbits(n)
+    x_dec = random.SystemRandom().getrandbits(n)
+#    x_dec = secrets.randbits(n)
     x = decimalToBinaryArray(x_dec, n)
-    print('\nBinary array x:', x)
 
     # 8. Compute an exponent based on following formula:
     #    e = a(1, x1) + a(2, x2) + ... + a(n, xn)
     e = 0
     for i in range(0, n):
         e = e + a[i][x[i]]
-    print('Exponent e:', e)
+    print('Exponent e: %d' % e)
 
     # 9. Compute y = g^e mod N
     y = fastexponent.calculate(g, e, N)
 
     # 10. Pad B(y) which is 2n bits
     B = decimalToBinaryArray(y, 2 * n)
-    print('Binary array B:', B)
 
     # 11. Compute f(x) = r * B(y) mod 2 to generate one bit
     f = 0
@@ -74,24 +75,26 @@ def generateRandomBit(n, N, a, g, r):
 def rand(low, high):
     # 1. Fix number of bits n to 8
     n = 8
-    print('\nFixed n (prime # bits):', n)
+    print('\nFixed n (prime # bits): %d' % n)
 
     # 2. Randomly generate prime numbers p and q of n bits each
     p = selectPrime(n)
     q = selectPrime(n)
-    print('Primes selected: p =', p, 'and q =', q)
+    print('Primes selected: p = %d and q = %d' %(p, q))
 
     # 3. Compute N = p * q
     N = p * q
-    print('Modulus N = ', N)
+    print('Modulus N = %d' % N)
 
     # 4. Chooose 2n random integers in range 1 < a < N
     #    Use a multidimensional array and initialize first pair to (0,0)
     #    which will be unused. Our first pair will be a[1][0] and a[1][1].
     a = []
     for i in range(0, n):
-        a0 = secrets.choice(range(1, N))
-        a1 = secrets.choice(range(1, N))
+#        a0 = secrets.choice(range(1, N))
+#        a1 = secrets.choice(range(1, N))
+        a0 = random.SystemRandom().randint(1, N)
+        a1 = random.SystemRandom().randint(1, N)
         a.append([a0, a1])
     print('Multidimensional array a: ', a)
 
@@ -99,7 +102,7 @@ def rand(low, high):
     #    g is a square in Z(N)*
     foundSquare = False
     while (foundSquare == False):
-	    b = secrets.choice(range(2, N))
+	    b = random.SystemRandom().randint(2, N)
 	    gcd = euclidean.gcd(b, N)
 	    if gcd == 1:
 	        g = (b ** 2) % N
@@ -111,32 +114,28 @@ def rand(low, high):
 	                foundSquare = True
 
     # 6. Choose a random r that is 2n bits long and convert to array
-    r_dec = secrets.randbits(2 * n)
-    print('Random number r: ', r_dec)
+    r_dec = random.SystemRandom().getrandbits(2 * n)
+    print('Random number r: %d' % r_dec)
     r = decimalToBinaryArray(r_dec, 2 * n)
-    print('Random array r:', r)
 
     # Generate random bit sequence
     num_bits = high.bit_length()
-    print('Total bits needed for high value:', num_bits)
+    print('Total bits needed for high value: %d' % num_bits)
     print('\nINITIALIZATION COMPLETE')
 
     b0 = generateRandomBit(n, N, a, g, r)
-    print ('Random bit', 0, ':', b0)
-    print ('Random bit sequence:', bin(b0))
     number = b0
     for i in range(1, num_bits):
         b1 = generateRandomBit(n, N, a, g, r)
-        print ('Random bit', i, ':', b1)
         number = (b1 << i) + b0
 
         # Final number must be less than the ceiling passed in as argument
         if (number > high):
             return b0
 
-        print ('Random bit sequence:', bin(number))
         b0 = number
 
+    print ('Random number: %d' % number)
     return number
 
 
@@ -149,7 +148,7 @@ def main():
 
     result = rand(low, high)
 
-    print ('\nNaor-Reingold random number: ', result)
+    print ('\nNaor-Reingold random number: %d' % result)
 
 
 if __name__ == '__main__':

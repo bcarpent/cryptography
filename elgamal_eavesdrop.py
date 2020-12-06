@@ -40,7 +40,7 @@ def main():
     b_l  = int(input("From Bob's public key, enter b^l: "))
 
     l = computeDiscreteLog(p, base, b_l)
-    print ('\nEve computed secret l = ', l)
+    print ('\nEve computed secret l = %d' % l)
 
     b_r  = int(input("From Alice's public key, enter b^r: "))
     E_x = int(input("\nEnter encrypted message E(x): "))
@@ -48,7 +48,7 @@ def main():
     # Now we can decrypt the message with Bob's secret l
     plaintext = decrypt(E_x, b_r, p, l)
 
-    print('\nDecrypted plaintext: ', plaintext)
+    print('\nDecrypted plaintext: %d' % plaintext)
 
 
 if __name__ == '__main__':

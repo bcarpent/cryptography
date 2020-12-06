@@ -33,7 +33,7 @@ def computePublicKey(p):
     # Use Blum-Blum-Shub PRNG to choose secret l from {2, ..., p-2}
     l = blumblumshub.rand(2, p-2)
 
-    print('\nBob has secret l: ', l)
+    print('\nBob has secret l: %d' % l)
 
     # Compute public key b^l % p
     b_l = fastexponent.calculate(b, l, p)
@@ -42,7 +42,7 @@ def computePublicKey(p):
 
 
 def decrypt(E_x, b_r, p, l):
-    print('Computing (', b_r, ') ^', l)
+    print('Computing (%d)^%d' %(b_r, l))
 
     # Bob computes (b^r)^l
     b_r_l = fastexponent.calculate(b_r, l, p)
@@ -95,15 +95,20 @@ def main():
 
     # Find a prime numbers p using 5 rounds of the Miller Rabin primality test
     p = miller_rabin.millerRabinTest(0, 5)
-    print('Prime p modulus: ', p)
+    print('Prime p modulus: %d' % p)
 
     # Compute the public key
     b, b_l, l = computePublicKey(p)
 
+    print('Sending public key (p, b, b^l): (%d, %d, %d)' %(p, b, b_l))
+
     # Get peer's email and send the public key
-    print('Sending public key (p, b, b^l): (', p, ',', b, ',', b_l, ')')
-    peerEmail = input("Enter peer email address: ")
-    sendPublicKey(peerEmail, p, b, b_l)
+    # Python 3 no longer accepts raw_input so skip this step
+    try:
+        peerEmail = raw_input("Enter peer email address: ")
+        sendPublicKey(peerEmail, e, b, b_l)
+    except NameError:
+        pass
 
     # Now wait for the encrypted message to be received
     print
@@ -114,7 +119,7 @@ def main():
     # Now decrypt the message received
     decryptedMsg = decrypt(E_x, b_r, p, l)
 
-    print('\nDecrypted plaintext: ', decryptedMsg)
+    print('\nDecrypted plaintext: %d' %decryptedMsg)
 
 
 if __name__ == '__main__':

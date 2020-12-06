@@ -4,7 +4,7 @@ import elgamal_decrypt
 import elgamal_eavesdrop
 
 # This RSA encrypt/decrypt/eavesdrop test can be run as follows:
-# python3 -m unittest -v test_elgamal.py 
+# python3 -m unittest -v test_elgamal
 #
 # To run full suite of unit tests:
 # python -m unittest discover -v

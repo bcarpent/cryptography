@@ -79,14 +79,13 @@ def main():
 	# Calculate GCD from the Euclidean Algorithm
     print
     print('EUCLIDEAN ALGORITHM')
-    gcd = gcd(m, n)
-    print('GCD(', m, ',', n, ') = ', gcd)
+    g = gcd(m, n)
+    print('GCD(%d, %d) = %d' %(m, n, g))
 
-    print
     print('EXTENDED EUCLIDEAN')
-    gcd, x0, y0 = extendedEuclidean(m, n)
-    print('GCD(', m, ',', n, ') = ', gcd)
-    print('(', x0, ')(', m, ') + (', y0, ')(', n, ') = ', gcd)
+    g, x0, y0 = extendedEuclidean(m, n)
+    print('GCD(%d, %d) = %d' %(m, n, g))
+    print('(%d)(%d) + (%d)(%d) = %d' %(x0, m, y0, n, g))
 
 
 if __name__ == '__main__':

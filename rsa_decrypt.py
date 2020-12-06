@@ -20,11 +20,11 @@ def calculateEncryptionDecryptionKeys(p, q):
     # Get the order of the group given p and q
     n = p * q
     print('')   
-    print('RSA modulus: ', n)
+    print('RSA modulus: %d' % n)
 
     # Compute the order of the group
     order = computeGroupOrder(p, q)
-    print('Order of group: ', order)
+    print('Order of group: %d' % order)
 
     # Now find the exponent e, which must be a coprime
     # of the order of the group. Start with a guess of 3
@@ -43,13 +43,12 @@ def calculateEncryptionDecryptionKeys(p, q):
         #
         gcd, x0, y0 = euclidean.extendedEuclidean(order, e)
         if gcd == 1:
-            print('(', x0, ')(', order, ') + (', y0, ')(', e, ') = ', gcd)
             expFound = True
         else:
             expFound = False
             e += 1
 
-    print('Encryption exponent: ', e)
+    print('Encryption exponent: %d' % e)
 
     # Per the equation above, y0 is our inverse. If y0 is negative, simply
     # add the order to arrive at the positive integer inverse.
@@ -58,7 +57,7 @@ def calculateEncryptionDecryptionKeys(p, q):
     else:
         d = y0
 
-    print('Decryption exponent: ', d)
+    print('Decryption exponent: %d' % d)
 
     return e, d
 
@@ -102,7 +101,6 @@ def rsaDecryption(E_x, d, n):
     # We now have the encryption exponent. Let's run fast exponentiation on
     # the message x
     result = fastexponent.calculate(E_x, d, n)
-    print('Decrypted message: ', E_x, '^', d, 'mod', n, '=', result)
     print
     return result
 
@@ -116,8 +114,8 @@ def main():
     p = miller_rabin.millerRabinTest(0, 5)
     q = miller_rabin.millerRabinTest(0, 5)
 
-    print('Prime p found: ', p)
-    print('Prime q found: ', q)
+    print('Prime p found: %d' % p)
+    print('Prime q found: %d' % q)
 
     # Product of the two primes will be our modulus n
     n = p * q
@@ -127,14 +125,17 @@ def main():
     # Returns the encryption and decryption keys
     e, d = calculateEncryptionDecryptionKeys(p, q)
 
-    print('Send public key (n, e): (', n, ',', e, ')')
+    print('Send public key (n, e): (%d, %d)' %(n, e))
 
     # Get peer's email and send the public key
-    peerEmail = input("Enter peer email address: ")
-    sendPublicKey(peerEmail, e, n)
+    # Python 3 no longer accepts raw_input so skip this step
+    try:
+        peerEmail = raw_input("Enter peer email address: ")
+        sendPublicKey(peerEmail, e, n)
+    except NameError:
+        pass
 
     # Now wait for the encrypted message to be received
-    print
     print
     print('Wait for encrypted message to be received...')
     E_x = int(input("Enter encrypted message E_x: "))
@@ -142,7 +143,7 @@ def main():
     # Now decrypt the message received
     decryptedMsg = rsaDecryption(E_x, d, n)
 
-    print('Decrypted message: ', decryptedMsg)
+    print('Decrypted message: %d' % decryptedMsg)
 
 
 if __name__ == '__main__':

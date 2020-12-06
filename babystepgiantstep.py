@@ -14,7 +14,7 @@ def babyStepGiantStep(base, a, n):
 
     # Compute m = ceiling of sqrt(n-1)
     m = int(math.ceil(math.sqrt(n-1)))
-    print('m = ', m)
+    print('m = %d' % m)
 
     # BABY STEPS
     # Compute b^j mod n using fast exponentiation for 0 <= j < m
@@ -30,7 +30,9 @@ def babyStepGiantStep(base, a, n):
         babyStepTable.setdefault(result, j)
         j += 1
 
-    print('Baby Step table:', babyStepTable)
+    print('\nBaby Step table:')
+    for key, value in babyStepTable.items():
+        print(key, ' : ', value) 
 
     # GIANT STEPS
     # Compute constant c = b^-m
@@ -40,7 +42,7 @@ def babyStepGiantStep(base, a, n):
     exp = n - 1 - m
     c = fastexponent.calculate(b, exp, n)
 
-    print('Constant c = ', c)
+    print('Constant c = %d' % c)
 
     # Loop through the giant steps in (im) increments
     # First value will be as follows:
@@ -51,7 +53,7 @@ def babyStepGiantStep(base, a, n):
     x0 = a
     if a in babyStepTable:
         j = babyStepTable[a]
-        print('We have a match for i = ', i, ', j = ', j)
+        print('We have a match for i = %d, j = %d' %(i, j))
         log = i * m + j
         if log > (n-1):
             log = log - (n - 1)
@@ -64,14 +66,13 @@ def babyStepGiantStep(base, a, n):
 #        print 'i = ', i, ': x = ', x
         if x in babyStepTable:
         	j = babyStepTable[x]
-        	print('We have a match for i = ', i, ', j = ', j)
+        	print('We have a match for i = %d, j = %d' %(i, j))
         	log = i * m + j
         	if log > (n-1):
         	    log = log - (n - 1)
         	break
         else:
         	i += 1
-
 
     return log
 
@@ -87,7 +88,7 @@ def main():
 
     log = babyStepGiantStep(base, a, n)
 
-    print ('Log result = ', log)
+    print ('Log result = %d' % log)
 
 
 if __name__ == '__main__':

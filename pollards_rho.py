@@ -10,7 +10,7 @@ def factor(n):
     # First let's make sure this isn't a prime
     result = miller_rabin.millerRabinTest(n, 3)
     if (result != 0):
-        print('The number', n, 'is a prime, cannot factor')
+        print('The number %d is a prime, cannot factor', n)
         return 0
 
     # Initialization
@@ -24,7 +24,8 @@ def factor(n):
         y = fastexponent.calculate(y, 2, n)
         p = euclidean.gcd(x-y, n)
 
-    print ('Pollards Rho found a factor of', n, ':', p)
+    print ('Pollards Rho found a factor of %d: %d' %(n, p))
+
     return p
 
 
@@ -36,9 +37,9 @@ def main():
 
     result = factor(n)
     if (result == 0):
-        print('\nPollards Rho method failed to find a factor for n =', result)
+        print('\nPollards Rho method failed to find a factor for n = %d' % result)
     else:
-	    print ('\nPollards Rho found a factor of', n, ':', result)
+	    print ('\nPollards Rho found a factor of %d: %d' %(n, result))
 
 
 if __name__ == '__main__':

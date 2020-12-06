@@ -2,9 +2,10 @@ import unittest
 import fastexponent
 
 # Full test suite can be run as follows:
-#
 # python -m unittest discover -v
 #
+# Or run this test alone:
+# python -m unittest -v test_fastexponent
 class TestFastExponent(unittest.TestCase):
 
     def test_calculateFastExponent(self):

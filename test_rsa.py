@@ -5,7 +5,7 @@ import rsa_decrypt
 import rsa_eavesdrop
 
 # This RSA encrypt/decrypt/eavesdrop test can be run as follows:
-# python3 -m unittest -v test_rsa.py 
+# python3 -m unittest -v test_rsa
 #
 # To run full suite of unit tests:
 # python3 -m unittest discover -v

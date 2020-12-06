@@ -16,12 +16,11 @@ def loop(p, g, b, B, n):
     factor = 0
     while (p <= B):
         l = math.floor(math.log(n, p))
-        print('l =', l)
+#        print('l =', l)
         b = fastexponent.calculate(b, (p ** l), n)
-#        b = (b**(p**l)) % n
-        print('b =', b)
+#        print('b =', b)
         g = euclidean.gcd((b-1), n)
-        print('g =', g)
+#        print('g =', g)
         if (g > 1 and g < n):
             factor = g
             break
@@ -41,14 +40,14 @@ def factor(n, B):
     # First let's make sure this isn't a prime
     result = miller_rabin.millerRabinTest(n, 3)
     if (result != 0):
-        print('The number', n, 'is a prime, cannot factor')
+        print('The number %d is a prime, cannot factor' % n)
         return 0
 
     # 2. Calculate gcd(b,n).
     while (selectedB == False):
         b = blumblumshub.rand(2, n-1)
         gcd = euclidean.gcd(b, n)
-        print('\nGCD (', b, ',', n, ') =', gcd)
+        print('\nGCD (%d, %d) = %d' %(b, n, gcd))
 
         # 3. If gcd = n, try another B
         if (gcd == n):
@@ -62,14 +61,13 @@ def factor(n, B):
     p = 2
     g = 1
 
-    print('\nInitialization complete: B =', B)
+    print('\nInitialization complete: B = %d' % B)
 
     # INITIALIZATION COMPLETE
 
     factor = 0
     i = 0
     # Choose a random integer b
-    print('Try b =', b)
     factor = loop(p, g, b, B, n)
     return factor
 
@@ -84,10 +82,10 @@ def main():
     p = factor(n, B)
 
     if (p == 0):
-        print('\nPollard p-1 method failed to find a factor for n =', n)
+        print('\nPollard p-1 method failed to find a factor for n = %d')
     else:
-	    print ('\nA factor of', n, 'is', p)
-	    print ('p - 1 =', p - 1, 'is', B, '- smooth')
+	    print ('\nA factor of %d is %d' %(n, p))
+	    print ('p - 1 = %d is %d-smooth' %(p - 1, B))
 
 
 if __name__ == '__main__':

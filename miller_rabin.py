@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
 import fastexponent
-import secrets
+import random
+#import secrets
 
 def selectCandidate(guess):
     candidateFound = False
@@ -9,7 +10,8 @@ def selectCandidate(guess):
         # If guess is 0, user wants us to pick a candidate odd number.
         # So let's pick a random number of 20 bits
         if guess == 0:
-            n = secrets.randbits(20)
+#            n = secrets.randbits(22)
+            n = random.SystemRandom().getrandbits(20)
         else:
             n = guess
 
@@ -21,7 +23,7 @@ def selectCandidate(guess):
         	candidateFound = True
         	break
 
-#    print ('\nCandidate odd integer for testing: ', n)
+#    print('\nCandidate odd integer for testing: ', n)
     return n
 
 
@@ -105,16 +107,17 @@ def millerRabinTest(guess, rounds):
             elif guess == 0 and result == 0:        # if composite and no guess, break and try new n
             	break
             else:                                   # if n is a probable prime, go another round with new base
-                b = secrets.choice(range(2, n-1))
+#                b = secrets.choice(range(2, n-1))
+                b = random.SystemRandom().choice(range(2, n-1))
 
         # If we found a probable prime after running through all the rounds
         # our search for a prime is complete. Otherwise, try the test with
         # another value of n.
         if result != 0:
-            print ('Strong pseudoprime found:', result, 'in', rounds, 'rounds')
+            print('Strong pseudoprime found: %d' % result)
             searchComplete = True
         else:
-#            print ('Integer ', n, 'is definitely a composite, seeking new candidate.')
+#           print ('Integer ', n, 'is definitely a composite, seeking new candidate.')
             n = selectCandidate(0)
 
     return n
@@ -122,7 +125,7 @@ def millerRabinTest(guess, rounds):
 
 def main():
     print('MILLER RABIN TEST')
-    print('Probabilistic Primality Test')
+    print('Probabilistic Primality Test and Prime Generator')
 
     guess = int(input("Enter odd integer guess or 0 to find a strong pseudoprime: "))
     rounds = int(input("Enter number of rounds to run on probable primes: "))
@@ -134,9 +137,9 @@ def main():
 
     if result == 0:
         if guess > 0:
-            print ('The integer', guess, 'is definitely a composite (not a prime)')
+            print('The integer %d is definitely a composite (not a prime)' % guess)
         else:
-            print ('No prime found in', rounds, 'number of rounds')
+            print('No prime found in %d number of rounds' % rounds)
 
 
 if __name__ == '__main__':

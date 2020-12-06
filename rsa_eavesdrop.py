@@ -15,14 +15,14 @@ def factorModulus(n):
     if (result != 0):
         p = result
         q = n / result
-        print('Pollards Rho factored', n, 'into p =', p, ', q =', q)
+        print('Pollards Rho method factored %d into p = %d, q = %d' %(n, p, q))
         return p, q
 
     result = pollards_p_1.factor(n, 8)
     if (result != 0):
         p = result
         q = n / result
-        print('Pollards Rho factored', n, 'into p =', p, ', q =', q)
+        print('Pollards P-1 method factored %d into p = %d, q = %d' %(n, p, q))
         return p, q
 
     return 0, 0
@@ -57,11 +57,10 @@ def calculateDecryptionKey(p, q, e):
 
 
 def rsaDecryption(E_x, d, n):
-
     # We now have the encryption exponent. Let's run fast exponentiation on
     # the message x
     result = fastexponent.calculate(E_x, d, n)
-    print('Decrypted message: ', E_x, '^', d, 'mod', n, '=', result)
+    print('Decrypted message: %d ^ %d mod %d = %d' %(E_x, d, n, result))
     print
     return result
 
@@ -85,7 +84,7 @@ def main():
     # Now compute the decryption key
     d = calculateDecryptionKey(p, q, e)
 
-    print('Decryption key: ', d)
+    print('Decryption key: %d' % d)
 
     # Now eavesdrop for the encrypted message
     print
@@ -95,7 +94,7 @@ def main():
     # Now decrypt the message received
     decryptedMsg = rsaDecryption(E_x, d, n)
 
-    print('Decrypted message: ', decryptedMsg)
+    print('Decrypted message: %d' % decryptedMsg)
 
 
 if __name__ == '__main__':

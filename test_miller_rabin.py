@@ -5,7 +5,7 @@ import miller_rabin
 # Table 2: Primes Below 10,000
 #
 # To run:
-# python3 -m unittest -v test_miller_rabin.py 
+# python -m unittest -v test_miller_rabin
 #
 class TestMillerRabin(unittest.TestCase):
 

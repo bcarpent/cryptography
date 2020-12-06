@@ -53,7 +53,7 @@ def main():
     n = int(n)
 
     result = calculate(x, e, n)
-    print('Result: ', x, '^', e, 'mod', n, '=', result)
+    print('Result: %d^%d mod %d = %d' %(x, e, n, result))
 
 
 if __name__ == '__main__':

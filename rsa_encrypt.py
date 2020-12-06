@@ -9,7 +9,7 @@ def rsaEncryption(n, e, x):
     # We now have the encryption exponent. Let's run fast exponentiation on
     # the message x
     result = fastexponent.calculate(x, e, n)
-    print('Encrypted message: ', x, '^', e, 'mod', n, '=', result)
+    print('Encrypted message: %d ^ %d mod %d = %d' %(x, e, n, result))
     print
     return result
 
@@ -58,16 +58,20 @@ def main():
 
     # Plaintext message must be less than prime modulus
     while (x >= n):
-        print('\n*** Message must be less than the modulus n = ', n)
+        print('\n*** Message must be less than the modulus n = ' % n)
         x = int(input("Enter integer message x < n:"))
 
     # Encrypt the message x with public key
     encryptedMsg = rsaEncryption(n, e, x)
 
     # Send public key and encrypted message to peer
-    recipientEmail = input("Enter recipient email address: ")
-    sendEncryptedMsg(recipientEmail, encryptedMsg)
-    print('Sent encrypted message!')
+    try:
+        recipientEmail = raw_input("Enter recipient email address: ")
+        sendEncryptedMsg(recipientEmail, encryptedMsg)
+        print('Sent encrypted message!')
+    except NameError:
+        pass
+
 
 if __name__ == '__main__':
     main()

@@ -98,14 +98,13 @@ def main():
     # Execute the primitive root search
     root = rootSearch(p, guess)
 
-    print
     if root == 0:
         if guess > 0:
-            print ('The integer', guess, 'is not a primitive root for multiplicative group Z(', p, ')')
+            print('The integer %d is not a primitive root for multiplicative group Z(%d)' %(guess, p))
         else:
-            print ('No primitive root found for multiplicative group Z(', p, ')')
+            print ('No primitive root found for multiplicative group Z(%p)' %p)
     else:
-        print ('Primitive root found: ', root)
+        print('Primitive root found: %d' % root)
 
     print
 
