@@ -11,6 +11,7 @@ from getpass import getpass
 
 def findGenerator(p):
     # Find a primitive root of Z(p)* with initial guesses of 2, 3, and 5
+    # (common primitive roots)
     g = 0
     guess = 2
     while (g == 0):
