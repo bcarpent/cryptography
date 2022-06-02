@@ -1,4 +1,4 @@
-# CS 789 Cryptography Final Project
+# Cryptography Project
 
 This is a Python library implementing and testing RSA and ElGamal algorithms
 
