@@ -1,6 +1,7 @@
 # Cryptography Project
 
 Author: Brian Carpenter
+
 This is a Python library implementing and testing RSA and ElGamal algorithms
 
 ## Installation
