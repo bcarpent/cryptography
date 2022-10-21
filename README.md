@@ -2,7 +2,7 @@
 
 Author: Brian Carpenter
 
-This is a Python library implementing and testing RSA and ElGamal algorithms
+This is a Python and Go library for implementing and testing RSA and ElGamal algorithms
 
 ## Installation
 
